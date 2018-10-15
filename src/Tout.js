@@ -9,7 +9,7 @@ export default class Tout extends Component {
 
   render() {
     return (
-      <ToutContainer onClick={this.handleClick}>
+      <ToutContainer className={this.props.className} onClick={this.handleClick}>
         <img src={ this.props.src } alt={ this.props.alt } />
       </ToutContainer>
     );
@@ -28,6 +28,7 @@ const ToutContainer = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
+  position: relative;
 
   @media screen and (max-width: 460px) {
     width: calc(50% - ${toutGutter}/4);

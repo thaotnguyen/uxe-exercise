@@ -65,7 +65,7 @@ export default class GalleryModal extends Component {
       <GalleryModalContainer 
         top={$(window).scrollTop()}
         {...this.props}>
-        <ModalHeader showControls={this.state.showControls}>
+        <ModalHeader className='gallery__modal-header' showControls={this.state.showControls}>
           {this.props.images[this.props.slide].title}
           <img src='/icons/close.png' onClick={this.closeModal} alt='close'/> 
         </ModalHeader> 
@@ -76,12 +76,12 @@ export default class GalleryModal extends Component {
           onTouchEnd={this.handleTouchEnd}
           slide={this.props.slide}>
           {this.props.images.map((img, index) => 
-            <ModalTout index={index} key={index}>
+            <ModalTout className='gallery__modal-tout' index={index} key={index}>
               <img src={`/img/${img.path}`} alt={img.title} />
             </ModalTout>  
           )}
         </ModalBody>
-        <ModalFooter showControls={this.state.showControls}>
+        <ModalFooter className='gallery__modal-footer' showControls={this.state.showControls}>
           <img src='/icons/plus_one.png' alt='plus_one'/>
           <img src='/icons/comment.png' alt='comment'/>
           <img src='/icons/add.png' alt='add'/>
@@ -150,7 +150,7 @@ const ModalFooter = styled.div`
   align-items: center;
   justify-content: space-between;
   opacity: ${ props => props.showControls ? 1 : 0 };
-  pointer-events: ${ props => props.showControls ? 'auto' : 'none' };
+  pointer-events: ${ props => props.showControls && props.isOpen ? 'auto' : 'none' };
   transition: opacity 0.3s;
   z-index: 5;
 
@@ -191,7 +191,5 @@ const ModalTout = styled.div`
     object-fit: contain;
     max-height: 100%;
     max-width: 100%;
-    height: 100%;
-    width: 100%;
   }
 `;

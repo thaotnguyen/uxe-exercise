@@ -65,7 +65,57 @@ export default class Gallery extends Component {
       width: '100%',
       position: 'fixed',
     });
-    $('.gallery__modal-body').css('transform', `translateX(${this.state.slide * 100})vw`)
+    $('.gallery__modal-body').css('transform', `translateX(${this.state.slide * 100})vw`);
+
+    // get current dimensions and offset to animate from
+    const originalSetting = $(`.gallery__tout:nth-child(${index + 1}) img`);
+
+    // clone tout that was clicked on so empty space isn't created
+    const clone = originalSetting.clone();
+    $('#root').append(clone);
+    clone.css({
+      position: 'fixed',
+      top: `calc(${originalSetting.offset().top}px - ${originalSetting.css('margin-top')})`,
+      left: `${originalSetting.offset().left}px`,
+      height: `${originalSetting.outerHeight()}`,
+      width: `${originalSetting.outerWidth()}`,
+      'z-index': 5,
+    });
+
+    // get new dimensions and offset to animate to
+    const newSettingParent = $(`.gallery__modal-tout:nth-child(${index + 1})`);
+    const newSetting = $(`.gallery__modal-tout:nth-child(${index + 1}) img`);
+
+    // hide old and new images so only clone is visible during animation, also hide controls
+    originalSetting.css('opacity', 0);
+    newSetting.css('opacity', 0);
+    $('.gallery__modal-header').css({
+      opacity: 0,
+      transition: 'none',
+    });
+    $('.gallery__modal-footer').css({
+      opacity: 0,
+      transition: 'none',
+    });
+
+    clone.animate({
+      left: `${newSetting.offset().left - newSettingParent.offset().left}px`,
+      top: `${newSetting.offset().top - newSettingParent.offset().top}px`,
+      height: `${newSetting.outerHeight()}px`,
+      width: `${newSetting.outerWidth()}px`,
+    }, 300, () => {
+      clone.remove();
+      originalSetting.css('opacity', 1);
+      newSetting.css('opacity', 1);
+      $('.gallery__modal-header').css({
+        opacity: 1,
+        transition: 'opacity 0.3s',
+      });      
+      $('.gallery__modal-footer').css({
+        opacity: 1,
+        transition: 'opacity 0.3s',
+      });    
+    });
     this.setState({
       slide: index,
       isOpen: true,
@@ -78,6 +128,55 @@ export default class Gallery extends Component {
     this.setState({
       isOpen: false,
     })
+
+    // get current dimensions and offset to animate from
+    const originalSetting = $(`.gallery__modal-tout:nth-child(${this.state.slide + 1}) img`);
+
+    // clone tout that was clicked on so empty space isn't created
+    const clone = originalSetting.clone();
+    $('#root').append(clone);
+    clone.css({
+      position: 'fixed',
+      top: `calc(${originalSetting.offset().top}px - ${originalSetting.css('margin-top')})`,
+      left: `${originalSetting.offset().left}px`,
+      height: `${originalSetting.outerHeight()}`,
+      width: `${originalSetting.outerWidth()}`,
+      'z-index': 5,
+    });
+
+    // get new dimensions and offset to animate to
+    const newSetting = $(`.gallery__tout:nth-child(${this.state.slide + 1}) img`);
+
+    // hide old and new images so only clone is visible during animation, also hide controls
+    originalSetting.css('opacity', 0);
+    newSetting.css('opacity', 0);
+    $('.gallery__modal-header').css({
+      opacity: 0,
+      transition: 'none',
+    });
+    $('.gallery__modal-footer').css({
+      opacity: 0,
+      transition: 'none',
+    });
+
+    clone.animate({
+      left: `${newSetting.offset().left}px`,
+      top: `${newSetting.offset().top}px`,
+      height: `${newSetting.outerHeight()}px`,
+      width: `${newSetting.outerWidth()}px`,
+    }, 300, () => {
+      clone.remove();
+      originalSetting.css('opacity', 1);
+      newSetting.css('opacity', 1);
+      $('.gallery__modal-header').css({
+        opacity: 1,
+        transition: 'opacity 0.3s',
+      });      
+      $('.gallery__modal-footer').css({
+        opacity: 1,
+        transition: 'opacity 0.3s',
+      });    
+    });
   }
 
   prevSlide = () => {
@@ -104,6 +203,7 @@ export default class Gallery extends Component {
         <GalleryBody>
           { this.state.images.map((img, index) => 
             <Tout 
+              className='gallery__tout'
               src={`/img/${img.path}`} 
               alt={img.title} 
               index={index}

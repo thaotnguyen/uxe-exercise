@@ -13,15 +13,12 @@ class App extends Component {
   }
 }
 
-// limiting it to mobile size and adding a border because it's supposed to be mobile-only
+// limiting it to mobile size because it's supposed to be mobile-only
 const AppWrapper = styled.div`
   box-sizing: border-box;
   max-width: 768px;
   height: 100%;
   width: 100%;
-  border-width: 0 1px 0 1px;
-  border-color: #e3e3e3;
-  border-style: solid;
   margin: 0 auto;
   font-family: Arial, sans-serif;
   text-align: center;
