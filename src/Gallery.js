@@ -75,7 +75,7 @@ export default class Gallery extends Component {
     $('#root').append(clone);
     clone.css({
       position: 'fixed',
-      top: `calc(${originalSetting.offset().top}px - ${originalSetting.css('margin-top')})`,
+      top: `calc(${originalSetting.offset().top}px)`,
       left: `${originalSetting.offset().left}px`,
       height: `${originalSetting.outerHeight()}`,
       width: `${originalSetting.outerWidth()}`,
@@ -89,14 +89,6 @@ export default class Gallery extends Component {
     // hide old and new images so only clone is visible during animation, also hide controls
     originalSetting.css('opacity', 0);
     newSetting.css('opacity', 0);
-    $('.gallery__modal-header').css({
-      opacity: 0,
-      transition: 'none',
-    });
-    $('.gallery__modal-footer').css({
-      opacity: 0,
-      transition: 'none',
-    });
 
     clone.animate({
       left: `${newSetting.offset().left - newSettingParent.offset().left}px`,
@@ -107,14 +99,6 @@ export default class Gallery extends Component {
       clone.remove();
       originalSetting.css('opacity', 1);
       newSetting.css('opacity', 1);
-      $('.gallery__modal-header').css({
-        opacity: 1,
-        transition: 'opacity 0.3s',
-      });      
-      $('.gallery__modal-footer').css({
-        opacity: 1,
-        transition: 'opacity 0.3s',
-      });    
     });
     this.setState({
       slide: index,
@@ -137,27 +121,21 @@ export default class Gallery extends Component {
     $('#root').append(clone);
     clone.css({
       position: 'fixed',
-      top: `calc(${originalSetting.offset().top}px - ${originalSetting.css('margin-top')})`,
+      top: `calc(${originalSetting.offset().top}px)`,
       left: `${originalSetting.offset().left}px`,
       height: `${originalSetting.outerHeight()}`,
       width: `${originalSetting.outerWidth()}`,
       'z-index': 5,
     });
 
+    clone.children('img').css('object-fit', 'cover');
+    
     // get new dimensions and offset to animate to
     const newSetting = $(`.gallery__tout:nth-child(${this.state.slide + 1}) img`);
 
     // hide old and new images so only clone is visible during animation, also hide controls
     originalSetting.css('opacity', 0);
     newSetting.css('opacity', 0);
-    $('.gallery__modal-header').css({
-      opacity: 0,
-      transition: 'none',
-    });
-    $('.gallery__modal-footer').css({
-      opacity: 0,
-      transition: 'none',
-    });
 
     clone.animate({
       left: `${newSetting.offset().left}px`,
@@ -168,14 +146,6 @@ export default class Gallery extends Component {
       clone.remove();
       originalSetting.css('opacity', 1);
       newSetting.css('opacity', 1);
-      $('.gallery__modal-header').css({
-        opacity: 1,
-        transition: 'opacity 0.3s',
-      });      
-      $('.gallery__modal-footer').css({
-        opacity: 1,
-        transition: 'opacity 0.3s',
-      });    
     });
   }
 

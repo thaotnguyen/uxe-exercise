@@ -37,12 +37,14 @@ export default class GalleryModal extends Component {
       modalBody.style.transition = 'none';
     }, 300);
     const touchDistance = this.state.currentTouchLocation - this.state.startingTouchLocation;
+    console.log(touchDistance);
     if (touchDistance  > 10 && this.props.slide > 0) {
       this.props.prevSlide();
     } else if (touchDistance < -10 && this.props.slide < this.props.images.length - 1) {
       this.props.nextSlide();
     }
     if (Math.abs(touchDistance) < 2) {
+      console.log('!');
       this.toggleControls();
     } 
   }
