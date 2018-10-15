@@ -67,7 +67,7 @@ export default class GalleryModal extends Component {
         {...this.props}>
         <ModalHeader showControls={this.state.showControls}>
           {this.props.images[this.props.slide].title}
-          <img src='/icons/close.png' onClick={this.closeModal} /> 
+          <img src='/icons/close.png' onClick={this.closeModal} alt='close'/> 
         </ModalHeader> 
         <ModalBody 
           className='gallery__modal-body'
@@ -82,10 +82,10 @@ export default class GalleryModal extends Component {
           )}
         </ModalBody>
         <ModalFooter showControls={this.state.showControls}>
-          <img src='/icons/plus_one.png' />
-          <img src='/icons/comment.png' />
-          <img src='/icons/add.png' />
-          <img src='/icons/share.png' />
+          <img src='/icons/plus_one.png' alt='plus_one'/>
+          <img src='/icons/comment.png' alt='comment'/>
+          <img src='/icons/add.png' alt='add'/>
+          <img src='/icons/share.png' alt='share'/>
         </ModalFooter>
       </GalleryModalContainer>
     )
