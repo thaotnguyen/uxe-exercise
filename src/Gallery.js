@@ -67,20 +67,27 @@ export default class Gallery extends Component {
     });
     $('.gallery__modal-body').css('transform', `translateX(${this.state.slide * 100})vw`);
 
+    const rootOffset = $('main').offset().left;
+
     // get current dimensions and offset to animate from
-    const originalSetting = $(`.gallery__tout:nth-child(${index + 1}) img`);
+    const originalSetting = $(`.gallery__tout:nth-child(${index + 1})`);
 
     // clone tout that was clicked on so empty space isn't created
     const clone = originalSetting.clone();
-    $('#root').append(clone);
     clone.css({
       position: 'fixed',
       top: `calc(${originalSetting.offset().top}px)`,
       left: `${originalSetting.offset().left}px`,
       height: `${originalSetting.outerHeight()}`,
       width: `${originalSetting.outerWidth()}`,
+      'padding-top': 0,
+      'margin-top': 0,
       'z-index': 5,
+      transition: 'none',
     });
+    $('#root').append(clone);
+    
+    clone.css('transition', 'all 0.3s');
 
     // get new dimensions and offset to animate to
     const newSettingParent = $(`.gallery__modal-tout:nth-child(${index + 1})`);
@@ -89,17 +96,22 @@ export default class Gallery extends Component {
     // hide old and new images so only clone is visible during animation, also hide controls
     originalSetting.css('opacity', 0);
     newSetting.css('opacity', 0);
+    $('.gallery__modal-header').css('visibility', 'hidden');
+    $('.gallery__modal-footer').css('visibility', 'hidden');
 
-    clone.animate({
-      left: `${newSetting.offset().left - newSettingParent.offset().left}px`,
+    clone.css({
+      left: `${newSetting.offset().left - newSettingParent.offset().left + rootOffset}px`,
       top: `${newSetting.offset().top - newSettingParent.offset().top}px`,
       height: `${newSetting.outerHeight()}px`,
       width: `${newSetting.outerWidth()}px`,
-    }, 300, () => {
+    });
+    setTimeout(() => {
       clone.remove();
       originalSetting.css('opacity', 1);
       newSetting.css('opacity', 1);
-    });
+      $('.gallery__modal-header').css('visibility', 'visible');
+      $('.gallery__modal-footer').css('visibility', 'visible');
+    }, 300);
     this.setState({
       slide: index,
       isOpen: true,
@@ -113,11 +125,14 @@ export default class Gallery extends Component {
       isOpen: false,
     })
 
+    const rootOffset = $('main').offset().left;
+
     // get current dimensions and offset to animate from
+    const newSetting = $(`.gallery__tout:nth-child(${this.state.slide + 1})`);
     const originalSetting = $(`.gallery__modal-tout:nth-child(${this.state.slide + 1}) img`);
 
     // clone tout that was clicked on so empty space isn't created
-    const clone = originalSetting.clone();
+    const clone = newSetting.clone();
     $('#root').append(clone);
     clone.css({
       position: 'fixed',
@@ -126,12 +141,9 @@ export default class Gallery extends Component {
       height: `${originalSetting.outerHeight()}`,
       width: `${originalSetting.outerWidth()}`,
       'z-index': 5,
+      'padding-top': 0,
+      'margin-top': 0,
     });
-
-    clone.children('img').css('object-fit', 'cover');
-    
-    // get new dimensions and offset to animate to
-    const newSetting = $(`.gallery__tout:nth-child(${this.state.slide + 1}) img`);
 
     // hide old and new images so only clone is visible during animation, also hide controls
     originalSetting.css('opacity', 0);

@@ -26,7 +26,7 @@ export default class GalleryModal extends Component {
       currentTouchLocation: evt.targetTouches[0].clientX,
     })
     document.querySelector('.gallery__modal-body').style.transform =
-      `translateX(calc(${this.props.slide * -100}vw + ${touchDistance}px))`;
+      `translateX(calc(${this.props.slide * -100}% + ${touchDistance}px))`;
   }
 
   handleTouchEnd = (evt) => {
@@ -37,14 +37,12 @@ export default class GalleryModal extends Component {
       modalBody.style.transition = 'none';
     }, 300);
     const touchDistance = this.state.currentTouchLocation - this.state.startingTouchLocation;
-    console.log(touchDistance);
     if (touchDistance  > 10 && this.props.slide > 0) {
       this.props.prevSlide();
     } else if (touchDistance < -10 && this.props.slide < this.props.images.length - 1) {
       this.props.nextSlide();
     }
     if (Math.abs(touchDistance) < 2) {
-      console.log('!');
       this.toggleControls();
     } 
   }
@@ -100,7 +98,7 @@ const GalleryModalContainer = styled.div`
   position: absolute;
   top: ${props => `${props.top}px`};
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   max-width: 100%;
   max-height: 100%;
@@ -117,7 +115,7 @@ const ModalHeader = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   max-width: 100%;
   padding: 25px;
   color: #ebebeb;
@@ -146,7 +144,7 @@ const ModalFooter = styled.div`
   padding: 30px 50px;
   bottom: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   max-width: 100%;
   display: flex;
   align-items: center;
@@ -169,19 +167,19 @@ const ModalBody = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   max-width: 100%;
   max-height: 100%;
   z-index: 1;
   display: flex;
   flex-direction: row;
-  transform: translateX(${props => `${props.slide * -100}vw` })
+  transform: translateX(${props => `${props.slide * -100}%` })
 `;
 
 const ModalTout = styled.div`
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   max-width: 100%;
   max-height: 100%;
   display: flex;

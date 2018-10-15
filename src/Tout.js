@@ -9,8 +9,14 @@ export default class Tout extends Component {
 
   render() {
     return (
-      <ToutContainer className={this.props.className} onClick={this.handleClick}>
-        <img src={ this.props.src } alt={ this.props.alt } />
+      <ToutContainer 
+        className={this.props.className} 
+        onClick={this.handleClick}
+        style={
+          {
+            backgroundImage: `url(${this.props.src})`
+          }
+        }>
       </ToutContainer>
     );
   }
@@ -29,22 +35,10 @@ const ToutContainer = styled.div`
   position: relative;
   overflow: hidden;
   position: relative;
+  background-size: cover;
 
   @media screen and (max-width: 460px) {
     width: calc(50% - ${toutGutter}/4);
     margin-top: calc(${toutGutter}/2);
-  }
-
-  img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-    flex-shrink: 0;
-    min-height: 100%;
-    min-width: 100%;
-    height: 100%;
-    width: 100%;
   }
 `;
